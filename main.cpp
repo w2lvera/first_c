@@ -7,7 +7,7 @@ typedef unsigned short word;
 byte checkBite(byte value,byte k){
     return (value&(1<<k))>>k;
 }
-//binary representation of value x --> 1111 1100
+//binary representation of value
 void binaryRepresentation(byte value){
     for(int k = 7;k>=0;k--)
         printf("%d",checkBite(value,k));
