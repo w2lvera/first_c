@@ -45,8 +45,20 @@ word replacing3Bits(byte k,word x,word m){
     word mask = ~(7<<m);
     return (x&mask)|(k<<m);
 }
+///create mask for k
+byte createMask(byte k){
+    byte mask = 1;
+    while(k>>1){
+        mask=mask<<1;
+        k=k>>1;
+    }
+    return (mask<<1)-1;
+}
+word replacingBits(byte k,word x,word m){
 
-
+    word mask = ~(createMask(k)<<m);
+    return (x&mask)|(k<<m);
+}
 
 int main()
 {
@@ -79,6 +91,15 @@ int main()
     catch(int x){
         printf("\n the replacement variable must be less than 7 and greater than 3\n");
     }
+//    int f = createMask(0);
+//    printf("\n %d",f);
+    //replacing bits 2,3,4 of the number 40 with 5 with count of mask
+    res = replacingBits(5,value,2);
+    printf("\n replacing bits 2,3,4 of the number 40 with 5 with count of mask  %d",res);
+    //replacing 5 bit of the number 40 with 0 with count of mask
+    res = replacingBits(0,value,5);
+    printf("\n replacing 5 bit of the number 40 with 0 with count of mask  %d",res);
+
     return 0;
 }
  //git push --set-upstream fromQt master
