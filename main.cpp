@@ -1,60 +1,69 @@
 #include <stdio.h>
-//Sum of array elements
-int sumLine(int* a,int n){
-    int s=0;
-    for(int i=0;i<n;i++) s+=a[i];
-    return s;
+#include <string.h>
+int myStrlen(char* str){
+    int n = 0;
+    for(;str[n]!='\0'; n++);
+    return n;
 }
-void printLine(int * a,int n){
-    for(int i=0;i<n;i++) printf("%4d ",a[i]);
+int myStrcmp(const char* s1,const char* s2){
+    int i = 0;
+    for(int i=0;s1[i]!='\0'&& s2[i]!='\0'&& s1[i]==s2[i];i++);
+    return s1[i]-s2[i];
+}
+void myStrcpy(char* s1,char*s2){
+    while(*s1++=*s2++);
+   // for(int i=0;s1[i]!='\0'&& s2[i]!='\0'; s1[i]=s2[i],i++);
+}
+char* resizeStr(char*str, char c){
+    int i;
+    for(i=0;str[i] && str[i]!=c;i++);
+    str[i]='\0';
+    return str;
+}
+int charToInt(const char* str){
+    int number = 0;
+    for(int i = 0;str[i];i++)
+        number = number*10+str[i]-'0';
+    return number;
+}
+char* intToChar(int n,char* str){
+    int i;
+    for(i=0;n!=0;i++,n/=10){
+        str[i] = n%10+'0';
+    }
+    int k =i;
+    for(int i = 0,j=k-1;i<j;i++,j--){
+        int s = str[i];
+        str[i] = str[j];
+        str[j] = s;
+    }
+    str[k]='\0';
+}
+char* capitalToUpper(char* str){
+    for(int i = 0; str[i];i++){
+        if(str[i]>'A'&& str[i]<'Z')
+            str[i]+='a'-'A';
+    }
+    return str;
 }
 int main()
 {
-    const int n = 5;
-    int arr[n] = {1,2,3,4,5};
-    for(int x:arr)printf("%d ",x);
-    for(int i=0;i<n;i++) arr[i]=i+1;
-    /////////////////////sum////////////////////
-    int sum = sumLine(arr,n);
-    //Sum of array elements without first element
-    int sumWithoutFirst = sumLine(arr+1,n-1);
-    ////////// two-dimensional arrays //////////////
-    const int m = 3;
-    int matr[n][m] = {0,0,0,
-                     1,1,1,
-                     2,2,2,
-                     3,3,3,
-                     4,4,4};
-    //print line by line
-    printf("\n");
-    for(int i = 0;i<n;i++){
-        for(int j=0;j<m;j++)
-            printf("%4d ", matr[i][j]);
-        printf("\n");
-    }
-    printf("\nprint for each");
-    for(int* p :matr){
-        printf("\n");
-        printLine(p,m);
-    }
+    printf("   cod   |    simvol\n");
+    for(int i=32;i<255;i++)
+        printf("   %3d   |    %c\n",i,i);
+    char str[100]="i love you";
+    printf("\n%s   strlen = %d last simvol %d\n",str,myStrlen(str),str[10]);
+    resizeStr(str,'y');
+    printf("\n%s \n",str);
+    int n = charToInt("1234");
+    printf("\n n=%d \n",n);
+    intToChar(n,str);
+    printf("\n%s \n",str);
+    myStrcpy(str,"I love Strings");
+    printf("\n%s \n",str);
+    capitalToUpper(str);
+    printf("\n%s \n",str);
 
-    //print by columns
-    printf("\nprint by columns\n");
-    for(int i = 0;i<m;i++){
-        for(int j=0;j<n;j++)
-            printf("%4d ", matr[j][i]);
-        printf("\n");
-    }
-    //sum of matrix elements
-    int sumOfMatrixElements = sumLine(*matr,n*m);
-    printf("\nsum of matrix elements %d",sumOfMatrixElements);
-    //the sum of the elements of each row of the matrix
-    int sumElementsOfEachRow;
-    for(int i = 0;i<n;i++)
-    {
-        sumElementsOfEachRow = sumLine(matr[i],m);
-        printf("\n row %d sum = %d",i,sumElementsOfEachRow);
-    }
-    return 0;
 }
+
  //git push --set-upstream fromQt master
